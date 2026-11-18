@@ -1,3 +1,7 @@
+# ==========================================
+# MYMFIT AI - GROQ API CLIENT
+# ==========================================
+
 import os
 import json
 
@@ -14,7 +18,10 @@ from cache.cache_manager import (
 )
 
 
-# LOAD ENVIRONMENT VARIABLES
+# ==========================================
+# ENVIRONMENT CONFIGURATION
+# ==========================================
+
 load_dotenv()
 
 API_KEY = os.getenv("GROQ_API_KEY")
@@ -24,27 +31,110 @@ if not API_KEY:
 
 client = Groq(api_key=API_KEY)
 
-
-# MODEL CONFIGURATION
 MODEL = "openai/gpt-oss-20b"
 
 
+# ==========================================
+# SESSION TOKEN TRACKER
+# ==========================================
+
+SESSION_USAGE = {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "api_requests": 0,
+    "cache_hits": 0,
+    "cache_misses": 0
+}
+
+
+def reset_session_usage():
+
+    for key in SESSION_USAGE:
+        SESSION_USAGE[key] = 0
+
+
+def get_session_usage():
+
+    return SESSION_USAGE.copy()
+
+
+def record_token_usage(response):
+
+    usage = response.usage
+
+    if usage:
+
+        SESSION_USAGE["input_tokens"] += usage.prompt_tokens
+
+        SESSION_USAGE["output_tokens"] += usage.completion_tokens
+
+
+# ==========================================
 # INITIALIZE CACHE
+# ==========================================
+
 initialize_cache()
 
 
+# ==========================================
+# VALIDATE AI RESPONSE
+# ==========================================
+
+def validate_response(data):
+
+    if not isinstance(data, dict):
+        return False
+
+    if not isinstance(data.get("message"), str):
+        return False
+
+    if not data["message"].strip():
+        return False
+
+    if not isinstance(data.get("recommendations"), list):
+        return False
+
+    if not isinstance(data.get("next_question"), str):
+        return False
+
+    if not isinstance(data.get("safety_note"), str):
+        return False
+
+    for item in data["recommendations"]:
+
+        if not isinstance(item, dict):
+            return False
+
+        if not isinstance(item.get("title"), str):
+            return False
+
+        if not isinstance(item.get("details"), str):
+            return False
+
+        if not item["title"].strip():
+            return False
+
+        if not item["details"].strip():
+            return False
+
+    return True
+
+
+# ==========================================
 # ASK AI WITH AUTOMATIC CACHING
+# ==========================================
+
 def ask_ai(conversation_history):
 
     try:
 
-        # GET LATEST USER QUESTION
+        if not conversation_history:
+            return {"error": "No question provided."}, None
+
         latest_question = conversation_history[-1]["content"]
 
-        # GET PREVIOUS CONVERSATION CONTEXT
         previous_history = conversation_history[:-1]
 
-        # GENERATE CACHE FINGERPRINT
         cache_key = generate_cache_key(
             latest_question,
             previous_history,
@@ -53,15 +143,19 @@ def ask_ai(conversation_history):
         )
 
         # CHECK LOCAL CACHE
+
         cached_response = get_cached_response(cache_key)
 
         if cached_response is not None:
+
+            SESSION_USAGE["cache_hits"] += 1
 
             print("\n[CACHE HIT] Retrieved answer locally.")
 
             return cached_response, json.dumps(cached_response)
 
-        # NO CACHE FOUND
+        SESSION_USAGE["cache_misses"] += 1
+
         print("\n[CACHE MISS] Contacting Groq API...")
 
         messages = [
@@ -73,55 +167,90 @@ def ask_ai(conversation_history):
 
         messages.extend(conversation_history)
 
-        # SEND REQUEST TO GROQ
-        response = client.chat.completions.create(
+        # ALLOW ONE RETRY
 
-            model=MODEL,
+        for attempt in range(2):
 
-            messages=messages,
+            response = client.chat.completions.create(
 
-            temperature=0.7,
+                model=MODEL,
 
-            max_completion_tokens=1000,
+                messages=messages,
 
-            response_format={"type": "json_object"}
+                temperature=0.7,
 
-        )
+                max_completion_tokens=1000,
 
-        answer = response.choices[0].message.content
+                response_format={"type": "json_object"}
 
-        parsed_answer = json.loads(answer)
+            )
 
-        # RECORD TOKEN USAGE
-        usage = response.usage
+            SESSION_USAGE["api_requests"] += 1
 
-        input_tokens = usage.prompt_tokens if usage else 0
+            record_token_usage(response)
 
-        output_tokens = usage.completion_tokens if usage else 0
+            answer = response.choices[0].message.content
 
-        # SAVE ANSWER IN CACHE
-        save_cached_response(
+            try:
 
-            cache_key,
+                parsed_answer = json.loads(answer)
 
-            latest_question,
+            except (json.JSONDecodeError, TypeError):
 
-            parsed_answer,
+                parsed_answer = None
 
-            input_tokens,
+            if parsed_answer is not None and validate_response(parsed_answer):
 
-            output_tokens
+                print("\n[VALIDATION SUCCESS] Response is valid.")
 
-        )
+                usage = response.usage
 
-        print("\n[NEW RESPONSE] Answer saved in local cache.")
+                save_cached_response(
 
-        return parsed_answer, answer
+                    cache_key,
 
-    except json.JSONDecodeError:
+                    latest_question,
+
+                    parsed_answer,
+
+                    usage.prompt_tokens if usage else 0,
+
+                    usage.completion_tokens if usage else 0
+
+                )
+
+                print("[NEW RESPONSE] Answer saved in local cache.")
+
+                return parsed_answer, answer
+
+            print("\n[VALIDATION FAILED] Invalid AI response.")
+
+            if attempt == 0:
+
+                print("[RETRY] Asking AI to correct its response.")
+
+                messages.append({
+                    "role": "assistant",
+                    "content": answer or ""
+                })
+
+                messages.append({
+                    "role": "user",
+                    "content": (
+                        "Correct your previous response. Return valid JSON "
+                        "with exactly these fields: message, recommendations, "
+                        "next_question and safety_note. "
+                        "Recommendations may be an empty list when unnecessary. "
+                        "Use an empty string for an unnecessary next_question "
+                        "or safety_note."
+                    )
+                })
 
         return {
-            "error": "Invalid JSON response from AI."
+            "error": (
+                "MYMFIT AI could not produce a valid response. "
+                "Please try again."
+            )
         }, None
 
     except Exception as error:
@@ -131,7 +260,10 @@ def ask_ai(conversation_history):
         }, None
 
 
+# ==========================================
 # GENERATE SESSION SUMMARY
+# ==========================================
+
 def generate_summary(conversation_history):
 
     try:
@@ -167,14 +299,19 @@ def generate_summary(conversation_history):
 
         )
 
+        SESSION_USAGE["api_requests"] += 1
+
+        record_token_usage(response)
+
         answer = response.choices[0].message.content
 
         return json.loads(answer)
 
     except Exception as error:
 
-        print("Summary generation failed:", error)
+        print("\nSummary generation failed:", error)
 
         return {
             "error": "Summary could not be generated."
         }
+        
