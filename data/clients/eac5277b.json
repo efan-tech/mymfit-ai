@@ -1,0 +1,20 @@
+{
+    "id": "eac5277b",
+    "name": "Amina",
+    "age": 27,
+    "fitness_level": "Beginner",
+    "primary_goals": [
+        "strength",
+        "consistency"
+    ],
+    "equipment": [
+        "bodyweight"
+    ],
+    "preferred_style": "",
+    "time_available": "",
+    "dietary_notes": "",
+    "limitations": "Mild knee pain",
+    "notes": "",
+    "created_at": "2026-11-18T21:06:26.350206",
+    "last_active": "2026-11-18T21:06:26.350206"
+}

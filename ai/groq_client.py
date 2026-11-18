@@ -8,7 +8,7 @@ import json
 from dotenv import load_dotenv
 from groq import Groq
 
-from ai.prompts import SYSTEM_PROMPT, SUMMARY_PROMPT
+from ai.prompts import SYSTEM_PROMPT, SUMMARY_PROMPT, build_system_prompt
 
 from cache.cache_manager import (
     initialize_cache,
@@ -124,7 +124,7 @@ def validate_response(data):
 # ASK AI WITH AUTOMATIC CACHING
 # ==========================================
 
-def ask_ai(conversation_history):
+def ask_ai(conversation_history , client_profile_text=None):
 
     try:
 
@@ -157,6 +157,8 @@ def ask_ai(conversation_history):
         SESSION_USAGE["cache_misses"] += 1
 
         print("\n[CACHE MISS] Contacting Groq API...")
+# Build system prompt (with or without client profile)
+        system_content = build_system_prompt(client_profile_text)
 
         messages = [
             {

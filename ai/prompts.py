@@ -302,5 +302,34 @@ Return only valid JSON.
 
 
 # ==========================================
+# BUILD SYSTEM PROMPT WITH CLIENT PROFILE
+# ==========================================
+
+def build_system_prompt(client_profile_text: str = None) -> str:
+    """
+    Combines the main SYSTEM_PROMPT with the client's profile
+    so the AI can personalize its responses.
+    """
+
+    if not client_profile_text or client_profile_text.strip() == "No client profile selected.":
+        return SYSTEM_PROMPT
+
+    profile_section = f"""
+
+==============================
+CURRENT CLIENT PROFILE
+==============================
+
+{client_profile_text}
+
+Use this information to personalize your advice.
+Do not invent extra details about the client.
+Only use what is written above.
+"""
+
+    return SYSTEM_PROMPT + profile_section
+
+
+# ==========================================
 # END OF MYMFIT AI PROMPTS
 # ==========================================
