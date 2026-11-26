@@ -1,0 +1,19 @@
+{
+    "id": "b4b55a6f",
+    "name": "max",
+    "age": 20,
+    "fitness_level": "Beginner",
+    "primary_goals": [
+        "Weight management"
+    ],
+    "equipment": [
+        "None"
+    ],
+    "preferred_style": "Home workouts",
+    "time_available": "15 minutes",
+    "dietary_notes": "Enjoy traditional foods",
+    "limitations": "",
+    "notes": "",
+    "created_at": "2026-11-23T07:13:49.903935",
+    "last_active": "2026-11-23T07:13:49.903935"
+}

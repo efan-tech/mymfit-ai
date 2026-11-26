@@ -2,7 +2,7 @@
 # MYMFIT AI - MAIN APPLICATION
 # ==========================================
 
-from ai.groq_client import ask_ai, generate_summary
+from ai.anthropic_client import ask_ai, generate_summary
 
 from memory.conversation import (
     create_conversation,

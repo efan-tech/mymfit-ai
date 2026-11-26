@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Start Your Journey | MYMFIT AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/onboarding.css') }}">
+</head>
+
+<body class="onboarding-body">
+
+<nav class="navbar">
+    <a href="/" class="logo">MYMFIT<span>.</span>AI</a>
+    <a href="/" class="secondary-link">← Back Home</a>
+</nav>
+
+
+<main class="onboarding-container">
+
+    <div class="onboarding-heading">
+        <span class="hero-label">YOUR JOURNEY BEGINS HERE</span>
+
+        <h1>Let's get to know <em>you.</em></h1>
+
+        <p>
+            A few questions will help us create a fitness
+            experience that fits your body, goals and lifestyle.
+        </p>
+    </div>
+
+
+    <div class="progress-wrapper">
+
+        <div class="progress-info">
+            <span id="step-label">STEP 01 OF 05</span>
+            <span id="progress-percent">20%</span>
+        </div>
+
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+
+        <div class="step-labels">
+            <span>About</span>
+            <span>Goals</span>
+            <span>Fitness</span>
+            <span>Lifestyle</span>
+            <span>Health</span>
+        </div>
+
+    </div>
+
+
+    <form method="POST" action="{{ url_for('onboard') }}"
+          id="onboarding-form">
+
+
+        <!-- STEP 1: ABOUT YOU -->
+
+        <section class="form-step active">
+
+            <span class="step-number">01 / ABOUT YOU</span>
+
+            <h2>First, let's meet you.</h2>
+
+            <p class="step-description">
+                Every journey starts somewhere. Tell us a little about yourself.
+            </p>
+
+            <div class="input-group">
+
+                <label for="name">What should we call you?</label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your first name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="age">How old are you?</label>
+
+                <input
+                    type="number"
+                    id="age"
+                    name="age"
+                    placeholder="Your age"
+                    min="16"
+                    max="100"
+                >
+
+                <small>This information is optional.</small>
+
+            </div>
+
+        </section>
+
+
+        <!-- STEP 2: YOUR GOALS -->
+
+        <section class="form-step">
+
+            <span class="step-number">02 / YOUR GOALS</span>
+
+            <h2>What would you love to achieve?</h2>
+
+            <p class="step-description">
+                Choose the goals that matter most to you.
+                You can select more than one.
+            </p>
+
+            <div class="selection-grid">
+
+                <label class="choice-card">
+                    <input type="checkbox" class="goal-choice"
+                           value="Weight management">
+                    <span class="choice-icon">⚖️</span>
+                    <strong>Weight management</strong>
+                    <small>Build sustainable habits.</small>
+                </label>
+
+                <label class="choice-card">
+                    <input type="checkbox" class="goal-choice"
+                           value="Build strength">
+                    <span class="choice-icon">💪</span>
+                    <strong>Build strength</strong>
+                    <small>Become stronger and more capable.</small>
+                </label>
+
+                <label class="choice-card">
+                    <input type="checkbox" class="goal-choice"
+                           value="Improve stamina">
+                    <span class="choice-icon">🏃</span>
+                    <strong>Improve stamina</strong>
+                    <small>Increase endurance and energy.</small>
+                </label>
+
+                <label class="choice-card">
+                    <input type="checkbox" class="goal-choice"
+                           value="Improve flexibility">
+                    <span class="choice-icon">🧘</span>
+                    <strong>Flexibility</strong>
+                    <small>Improve movement and mobility.</small>
+                </label>
+
+                <label class="choice-card">
+                    <input type="checkbox" class="goal-choice"
+                           value="General fitness">
+                    <span class="choice-icon">🌿</span>
+                    <strong>General fitness</strong>
+                    <small>Build a healthier lifestyle.</small>
+                </label>
+
+                <label class="choice-card">
+                    <input type="checkbox" class="goal-choice"
+                           value="Healthy habits">
+                    <span class="choice-icon">✨</span>
+                    <strong>Healthy habits</strong>
+                    <small>Become more consistent.</small>
+                </label>
+
+            </div>
+
+            <input type="hidden" name="primary_goals" id="primary_goals">
+
+        </section>
+
+
+        <!-- STEP 3: FITNESS -->
+
+        <section class="form-step">
+
+            <span class="step-number">03 / YOUR FITNESS</span>
+
+            <h2>Where are you starting from?</h2>
+
+            <p class="step-description">
+                There's no wrong answer. We simply want to understand
+                your current experience.
+            </p>
+
+            <div class="input-group">
+
+                <label>What's your fitness experience?</label>
+
+                <select name="fitness_level">
+
+                    <option value="Beginner">Beginner</option>
+
+                    <option value="Intermediate">Intermediate</option>
+
+                    <option value="Advanced">Advanced</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>Where do you prefer working out?</label>
+
+                <select name="preferred_style">
+
+                    <option value="Home workouts">At home</option>
+
+                    <option value="Gym workouts">At the gym</option>
+
+                    <option value="Outdoor workouts">Outdoors</option>
+
+                    <option value="Mixed workouts">A combination</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>What equipment do you have?</label>
+
+                <div class="selection-grid equipment-grid">
+
+                    <label class="choice-card">
+                        <input type="checkbox" class="equipment-choice"
+                               value="None">
+                        <strong>No equipment</strong>
+                    </label>
+
+                    <label class="choice-card">
+                        <input type="checkbox" class="equipment-choice"
+                               value="Dumbbells">
+                        <strong>Dumbbells</strong>
+                    </label>
+
+                    <label class="choice-card">
+                        <input type="checkbox" class="equipment-choice"
+                               value="Resistance bands">
+                        <strong>Resistance bands</strong>
+                    </label>
+
+                    <label class="choice-card">
+                        <input type="checkbox" class="equipment-choice"
+                               value="Gym equipment">
+                        <strong>Gym equipment</strong>
+                    </label>
+
+                </div>
+
+                <input type="hidden" name="equipment" id="equipment">
+
+            </div>
+
+        </section>
+
+
+        <!-- STEP 4: LIFESTYLE -->
+
+        <section class="form-step">
+
+            <span class="step-number">04 / YOUR LIFESTYLE</span>
+
+            <h2>Let's make it realistic.</h2>
+
+            <p class="step-description">
+                Your fitness plan should fit into your everyday life.
+            </p>
+
+            <div class="input-group">
+
+                <label>How much time can you dedicate to exercise?</label>
+
+                <select name="time_available">
+
+                    <option value="15 minutes">15 minutes daily</option>
+
+                    <option value="30 minutes">30 minutes daily</option>
+
+                    <option value="45 minutes">45 minutes daily</option>
+
+                    <option value="60 minutes">1 hour or more</option>
+
+                    <option value="Flexible">My schedule varies</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="dietary_notes">
+                    Tell us about your eating preferences.
+                </label>
+
+                <textarea
+                    name="dietary_notes"
+                    id="dietary_notes"
+                    rows="4"
+                    placeholder="For example: I enjoy traditional Kenyan meals, vegetarian foods, or I have particular dietary preferences..."
+                ></textarea>
+
+            </div>
+
+        </section>
+
+
+        <!-- STEP 5: HEALTH -->
+
+        <section class="form-step">
+
+            <span class="step-number">05 / YOUR WELLNESS</span>
+
+            <h2>Your wellbeing comes first.</h2>
+
+            <p class="step-description">
+                Help us understand any considerations that may affect
+                your exercise experience.
+            </p>
+
+            <div class="input-group">
+
+                <label for="limitations">
+                    Are there any physical limitations or health considerations
+                    you'd like your coach to know about?
+                </label>
+
+                <textarea
+                    name="limitations"
+                    id="limitations"
+                    rows="5"
+                    placeholder="Share anything relevant, or leave this blank if you prefer."
+                ></textarea>
+
+                <small>
+                    Only share what you're comfortable sharing.
+                    MYMFIT AI is not a substitute for professional medical advice.
+                </small>
+
+            </div>
+
+
+            <div class="completion-message">
+
+                <span>🌿</span>
+
+                <h3>You're ready to begin.</h3>
+
+                <p>
+                    We'll use your answers to create your personal
+                    MYMFIT AI experience.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- NAVIGATION -->
+
+        <div class="form-navigation">
+
+            <button type="button" id="back-button"
+                    class="back-button" disabled>
+                ← Back
+            </button>
+
+            <button type="button" id="next-button"
+                    class="primary-button">
+                Continue →
+            </button>
+
+            <button type="submit" id="submit-button"
+                    class="primary-button" style="display:none;">
+                Create My Journey →
+            </button>
+
+        </div>
+
+    </form>
+
+</main>
+
+
+<script src="{{ url_for('static', filename='js/onboarding.js') }}"></script>
+
+</body>
+</html>

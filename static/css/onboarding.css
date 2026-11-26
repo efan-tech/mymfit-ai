@@ -1,0 +1,342 @@
+/* =================================
+   MYMFIT AI - ONBOARDING DESIGN
+================================= */
+
+.onboarding-body {
+    background: var(--cream);
+    min-height: 100vh;
+}
+
+.onboarding-container {
+    max-width: 850px;
+    margin: 35px auto 90px;
+    padding: 0 25px;
+}
+
+/* HEADER */
+
+.onboarding-heading {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.onboarding-heading h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 6vw, 55px);
+    color: var(--green-dark);
+    margin: 15px 0;
+}
+
+.onboarding-heading h1 em {
+    color: var(--coral);
+}
+
+.onboarding-heading p {
+    max-width: 550px;
+    margin: auto;
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+/* PROGRESS */
+
+.progress-wrapper {
+    margin-bottom: 45px;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--green);
+}
+
+.progress-track {
+    width: 100%;
+    height: 7px;
+    background: #E7E8E0;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 20%;
+    height: 100%;
+    background: var(--green);
+    border-radius: 20px;
+    transition: width 0.4s ease;
+}
+
+.step-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    font-size: 10px;
+    color: var(--muted);
+}
+
+/* FORM CARD */
+
+#onboarding-form {
+    background: white;
+    border: 1px solid #EEECE5;
+    border-radius: 25px;
+    padding: 45px;
+    box-shadow: 0 15px 45px rgba(23,76,60,0.045);
+}
+
+.form-step {
+    display: none;
+    animation: fadeIn 0.35s ease;
+}
+
+.form-step.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.step-number {
+    color: var(--coral);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.form-step h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    color: var(--green-dark);
+    margin: 15px 0 10px;
+}
+
+.step-description {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 35px;
+}
+
+/* INPUTS */
+
+.input-group {
+    margin-bottom: 28px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 12px;
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #E4E6DE;
+    background: #FBFCF9;
+    border-radius: 12px;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--dark);
+    transition: 0.3s;
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(23,76,60,0.08);
+}
+
+.input-group textarea {
+    resize: vertical;
+}
+
+.input-group small {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 9px;
+    line-height: 1.6;
+}
+
+/* SELECTION CARDS */
+
+.selection-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.choice-card {
+    position: relative;
+    padding: 20px;
+    background: #FBFCF9;
+    border: 1px solid #E8EAE3;
+    border-radius: 15px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: 0.25s;
+}
+
+.choice-card:hover {
+    border-color: var(--green);
+    transform: translateY(-3px);
+}
+
+.choice-card:has(input:checked) {
+    border: 2px solid var(--green);
+    background: var(--green-light);
+}
+
+.choice-card input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.choice-icon {
+    font-size: 25px;
+    margin-bottom: 13px;
+}
+
+.choice-card strong {
+    color: var(--green-dark);
+    font-size: 13px;
+    margin-bottom: 7px;
+}
+
+.choice-card small {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.equipment-grid .choice-card {
+    min-height: 75px;
+    justify-content: center;
+}
+
+/* COMPLETION */
+
+.completion-message {
+    text-align: center;
+    background: var(--green-light);
+    padding: 30px 20px;
+    border-radius: 18px;
+    margin-top: 30px;
+}
+
+.completion-message span {
+    font-size: 35px;
+}
+
+.completion-message h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 25px;
+    color: var(--green-dark);
+    margin: 12px 0;
+}
+
+.completion-message p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted);
+}
+
+/* NAVIGATION */
+
+.form-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-top: 45px;
+}
+
+.back-button {
+    background: transparent;
+    border: 1px solid #DDE2DA;
+    color: var(--green);
+    padding: 15px 25px;
+    border-radius: 30px;
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.back-button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.form-navigation .primary-button {
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .onboarding-container {
+        margin-top: 25px;
+        padding: 0 16px;
+    }
+
+    .onboarding-heading {
+        margin-bottom: 35px;
+    }
+
+    #onboarding-form {
+        padding: 25px 20px;
+        border-radius: 20px;
+    }
+
+    .form-step h2 {
+        font-size: 28px;
+    }
+
+    .selection-grid {
+        gap: 10px;
+    }
+
+    .choice-card {
+        padding: 15px;
+    }
+
+    .step-labels {
+        font-size: 9px;
+    }
+
+    .form-navigation {
+        margin-top: 30px;
+    }
+
+    .form-navigation button {
+        padding: 14px 18px;
+        font-size: 12px;
+    }
+}

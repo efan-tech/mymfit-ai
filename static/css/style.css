@@ -1,0 +1,340 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap');
+
+:root {
+    --green: #174C3C;
+    --green-dark: #10392D;
+    --green-light: #E8F0E9;
+    --cream: #FAF8F2;
+    --coral: #E98F7C;
+    --dark: #252D29;
+    --muted: #777F78;
+    --white: #FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbar {
+    height: 85px;
+    padding: 0 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--cream);
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 800;
+    color: var(--green);
+    letter-spacing: -1px;
+}
+
+.logo span {
+    color: var(--coral);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+    font-size: 14px;
+    color: #535B55;
+}
+
+.nav-links a:hover {
+    color: var(--green);
+}
+
+.nav-button {
+    background: var(--green);
+    color: white;
+    padding: 13px 24px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.nav-button:hover {
+    background: var(--green-dark);
+    transform: translateY(-2px);
+}
+
+.hero {
+    padding: 75px 8% 90px;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    gap: 60px;
+    min-height: 590px;
+}
+
+.hero-label {
+    color: var(--green);
+    background: var(--green-light);
+    display: inline-block;
+    padding: 9px 17px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(45px, 5.5vw, 76px);
+    line-height: 1.12;
+    font-weight: 600;
+    color: var(--green-dark);
+    margin-bottom: 25px;
+}
+
+.hero h1 em {
+    color: var(--coral);
+    font-weight: 500;
+}
+
+.hero-text {
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--muted);
+    max-width: 490px;
+    margin-bottom: 35px;
+}
+
+.hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.primary-button {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    padding: 17px 30px;
+    border-radius: 35px;
+    font-size: 14px;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.primary-button:hover {
+    background: var(--green-dark);
+    transform: translateY(-3px);
+}
+
+.secondary-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--green);
+}
+
+.hero-visual {
+    position: relative;
+    min-height: 440px;
+    border-radius: 190px 190px 35px 35px;
+    background:
+        radial-gradient(circle at 70% 25%, #F3C5A9 0, transparent 30%),
+        linear-gradient(145deg, #D8E5D8, #A9C4AE);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.visual-circle {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.28);
+    border: 1px solid rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 35px;
+    color: var(--green-dark);
+}
+
+.visual-circle div {
+    font-family: 'Playfair Display', serif;
+    font-size: 35px;
+    line-height: 1.25;
+}
+
+.visual-tag {
+    position: absolute;
+    bottom: 35px;
+    left: 25px;
+    background: white;
+    padding: 16px 22px;
+    border-radius: 15px;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.visual-tag span {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 400;
+    margin-top: 5px;
+}
+
+.section {
+    padding: 85px 8%;
+}
+
+.section-heading {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 50px;
+}
+
+.section-heading small {
+    color: var(--coral);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+.section-heading h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 43px;
+    color: var(--green-dark);
+    margin: 15px 0;
+}
+
+.section-heading p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.feature-card {
+    padding: 35px 30px;
+    border-radius: 22px;
+    background: white;
+    transition: 0.3s;
+    border: 1px solid #F0EEE7;
+}
+
+.feature-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 18px 40px rgba(23,76,60,0.08);
+}
+
+.feature-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--green-light);
+    font-size: 24px;
+    margin-bottom: 25px;
+}
+
+.feature-card h3 {
+    color: var(--green-dark);
+    font-size: 19px;
+    margin-bottom: 13px;
+}
+
+.feature-card p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.cta {
+    margin: 20px 8% 85px;
+    padding: 65px 30px;
+    text-align: center;
+    background: var(--green);
+    color: white;
+    border-radius: 28px;
+}
+
+.cta h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.cta p {
+    color: #D7E5DC;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.cta .primary-button {
+    background: var(--coral);
+}
+
+.footer {
+    padding: 30px 8%;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid #EAE8E0;
+}
+
+@media (max-width: 850px) {
+    .navbar {
+        padding: 0 5%;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 55px 6%;
+        gap: 40px;
+    }
+
+    .hero-visual {
+        min-height: 350px;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .section {
+        padding: 65px 6%;
+    }
+
+    .section-heading h2,
+    .cta h2 {
+        font-size: 34px;
+    }
+}

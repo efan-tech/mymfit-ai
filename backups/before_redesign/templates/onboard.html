@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Onboard New Client</h1>
+<form method="POST">
+    <label>Name *</label>
+    <input type="text" name="name" required>
+
+    <label>Age</label>
+    <input type="number" name="age" min="1">
+
+    <label>Fitness Level</label>
+    <select name="fitness_level">
+        <option>Beginner</option>
+        <option>Intermediate</option>
+        <option>Advanced</option>
+    </select>
+
+    <label>Primary Goals (comma-separated)</label>
+    <input type="text" name="primary_goals" placeholder="e.g., Lose weight, Build muscle">
+
+    <label>Equipment (comma-separated)</label>
+    <input type="text" name="equipment" placeholder="e.g., Dumbbells, Resistance bands">
+
+    <label>Preferred Training Style</label>
+    <input type="text" name="preferred_style" placeholder="e.g., HIIT, Strength training">
+
+    <label>Time Available</label>
+    <input type="text" name="time_available" placeholder="e.g., 3 days/week, 30 mins">
+
+    <label>Dietary Notes</label>
+    <textarea name="dietary_notes" rows="2"></textarea>
+
+    <label>Limitations / Injuries</label>
+    <textarea name="limitations" rows="2"></textarea>
+
+    <button type="submit">Create Profile</button>
+</form>
+{% endblock %}

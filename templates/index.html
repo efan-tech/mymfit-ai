@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Client Profiles</h1>
+{% if clients %}
+    <ul>
+    {% for client in clients %}
+        <li>
+            <strong>{{ client.name }}</strong> ({{ client.fitness_level }})
+            <a href="{{ url_for('view_client', client_id=client.id) }}">View</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No clients yet. <a href="{{ url_for('onboard') }}">Onboard your first client</a>.</p>
+{% endif %}
+{% endblock %}

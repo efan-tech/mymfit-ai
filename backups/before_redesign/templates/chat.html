@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Coaching Session: {{ client.name }}</h1>
+<p><a href="{{ url_for('view_client', client_id=client.id) }}">← Back to Profile</a></p>
+
+<!-- Chat History Display -->
+<div style="background: #f4f4f9; border: 1px solid #ccc; padding: 15px; height: 450px; overflow-y: scroll; margin-bottom: 20px; border-radius: 8px;">
+    {% if not history %}
+        <p style="color: gray; text-align: center; margin-top: 150px;">Tell MYMFIT AI about your fitness journey to begin...</p>
+    {% endif %}
+    
+    {% for msg in history %}
+        {% if msg.role == 'user' %}
+            <!-- User Message (Right Side) -->
+            <div style="text-align: right; margin: 15px 0;">
+                <span style="background: #007bff; color: white; padding: 10px 15px; border-radius: 15px 15px 0 15px; display: inline-block; max-width: 80%; text-align: left;">
+                    {{ msg.content }}
+                </span>
+            </div>
+        {% else %}
+            <!-- AI Message (Left Side) -->
+            <div style="text-align: left; margin: 15px 0;">
+                <span style="background: #ffffff; border: 1px solid #ddd; color: black; padding: 12px 15px; border-radius: 15px 15px 15px 0; display: inline-block; max-width: 85%; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                    
+                    {% if msg.is_json %}
+                        <!-- AI Message Body -->
+                        <div style="font-weight: bold; margin-bottom: 8px;">
+                            {{ msg.data.message }}
+                        </div>
+
+                        <!-- AI Recommendations -->
+                        {% if msg.data.recommendations and msg.data.recommendations|length > 0 %}
+                            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee;">
+                                <span style="color: #28a745; font-weight: bold; font-size: 0.9em;">RECOMMENDATIONS:</span>
+                                <ul style="margin-top: 5px; padding-left: 20px; font-size: 0.95em;">
+                                {% for item in msg.data.recommendations %}
+                                    <li style="margin-bottom: 8px;">
+                                        <strong>{{ item.title }}</strong><br>
+                                        {{ item.details }}
+                                    </li>
+                                {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+
+                        <!-- AI Follow-up Question -->
+                        {% if msg.data.next_question %}
+                            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ccc;">
+                                <em>{{ msg.data.next_question }}</em>
+                            </div>
+                        {% endif %}
+
+                        <!-- AI Safety Note -->
+                        {% if msg.data.safety_note %}
+                            <div style="margin-top: 10px; font-size: 0.85em; color: #777; background: #fff3cd; padding: 8px; border-radius: 5px;">
+                                <strong>⚠️ Safety Note:</strong> {{ msg.data.safety_note }}
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <!-- Fallback for plain text -->
+                        <div style="white-space: pre-wrap;">{{ msg.content }}</div>
+                    {% endif %}
+                </span>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<!-- Chat Input Form -->
+<form method="POST" style="display: flex; gap: 10px;">
+    <input type="text" name="message" placeholder="Type your message..." required style="flex: 1;" autocomplete="off">
+    <button type="submit" style="margin-top: 0; background: #007bff;">Send</button>
+</form>
+
+<hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+<!-- Save Session Button -->
+<a href="{{ url_for('save_and_end_session', client_id=client.id) }}">
+    <button style="background: #dc3545; width: 100%;">End Session & Save Summary</button>
+</a>
+{% endblock %}

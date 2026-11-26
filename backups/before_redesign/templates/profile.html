@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ "Edit" if edit else "View" }} Profile: {{ client.name }}</h1>
+
+{% if edit %}
+<form method="POST">
+    <label>Name</label>
+    <input type="text" name="name" value="{{ client.name }}" required>
+
+    <label>Age</label>
+    <input type="number" name="age" value="{{ client.age or '' }}" min="1">
+
+    <label>Fitness Level</label>
+    <select name="fitness_level">
+        {% for level in ["Beginner", "Intermediate", "Advanced"] %}
+            <option {% if client.fitness_level == level %}selected{% endif %}>{{ level }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Primary Goals (comma-separated)</label>
+    <input type="text" name="primary_goals" value="{{ client.primary_goals | join(', ') }}">
+
+    <label>Equipment (comma-separated)</label>
+    <input type="text" name="equipment" value="{{ client.equipment | join(', ') }}">
+
+    <label>Preferred Style</label>
+    <input type="text" name="preferred_style" value="{{ client.preferred_style }}">
+
+    <label>Time Available</label>
+    <input type="text" name="time_available" value="{{ client.time_available }}">
+
+    <label>Dietary Notes</label>
+    <textarea name="dietary_notes" rows="2">{{ client.dietary_notes }}</textarea>
+
+    <label>Limitations</label>
+    <textarea name="limitations" rows="2">{{ client.limitations }}</textarea>
+
+    <button type="submit">Save Changes</button>
+    <a href="{{ url_for('view_client', client_id=client.id) }}">Cancel</a>
+</form>
+
+{% else %}
+    <p><strong>ID:</strong> {{ client.id }}</p>
+    <p><strong>Age:</strong> {{ client.age or '—' }}</p>
+    <p><strong>Fitness Level:</strong> {{ client.fitness_level }}</p>
+    <p><strong>Goals:</strong> {{ client.primary_goals | join(', ') or '—' }}</p>
+    <p><strong>Equipment:</strong> {{ client.equipment | join(', ') or '—' }}</p>
+    <p><strong>Preferred Style:</strong> {{ client.preferred_style or '—' }}</p>
+    <p><strong>Time Available:</strong> {{ client.time_available or '—' }}</p>
+    <p><strong>Dietary Notes:</strong> {{ client.dietary_notes or '—' }}</p>
+    <p><strong>Limitations:</strong> {{ client.limitations or '—' }}</p>
+    <p><strong>Created:</strong> {{ client.created_at }}</p>
+    <p><strong>Last Active:</strong> {{ client.last_active }}</p>
+    <p>
+     <a href="{{ url_for('edit_client', client_id=client.id) }}">Edit Profile</a>
+</p>
+<a href="{{ url_for('chat', client_id=client.id) }}">
+    <button style="background: #28a745;">💬 Start AI Coaching Session</button>
+</a>
+{% endif %}
+{% endblock %}

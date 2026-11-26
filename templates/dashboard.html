@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Dashboard | MYMFIT AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+
+<body class="dashboard-body">
+
+<!-- NAVIGATION -->
+
+<nav class="dashboard-nav">
+
+    <a href="/" class="logo">MYMFIT<span>.</span>AI</a>
+
+    <div class="dashboard-nav-links">
+        <a href="#overview" class="active">Overview</a>
+        <a href="#my-journey">My Journey</a>
+        <a href="#discover">Discover</a>
+    </div>
+
+    <a href="{{ url_for('view_client', client_id=client.id) }}"
+       class="profile-button">
+        {{ client.name[0]|upper }}
+    </a>
+
+</nav>
+
+
+<main class="dashboard-container">
+
+    <!-- WELCOME -->
+
+    <section class="welcome-section" id="overview">
+
+        <div>
+            <span class="welcome-label">YOUR PERSONAL WELLNESS SPACE</span>
+
+            <h1>
+                Hello, {{ client.name }}.
+                <br>
+                <em>You're right where you need to be.</em>
+            </h1>
+
+            <p>
+                Every small step counts. Let's make today another
+                step towards becoming stronger and healthier.
+            </p>
+        </div>
+
+        <div class="welcome-decoration">
+            <span>🌿</span>
+        </div>
+
+    </section>
+
+
+    <!-- JOURNEY SUMMARY -->
+
+    <section class="journey-section" id="my-journey">
+
+        <div class="section-title">
+            <div>
+                <span class="welcome-label">YOUR STARTING POINT</span>
+                <h2>Your fitness journey</h2>
+            </div>
+        </div>
+
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+
+                <span class="summary-icon">🎯</span>
+
+                <p>YOUR FITNESS LEVEL</p>
+
+                <h3>{{ client.fitness_level }}</h3>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="summary-icon">💪</span>
+
+                <p>YOUR MAIN GOALS</p>
+
+                <h3>{{ client.primary_goals|length }} Goals</h3>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="summary-icon">⏱️</span>
+
+                <p>YOUR AVAILABLE TIME</p>
+
+                <h3>{{ client.time_available or 'Flexible' }}</h3>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- GOALS -->
+
+    <section class="goals-section">
+
+        <div class="section-title">
+            <div>
+                <span class="welcome-label">WHAT MATTERS TO YOU</span>
+                <h2>Your personal goals</h2>
+            </div>
+        </div>
+
+        <div class="goal-list">
+
+            {% for goal in client.primary_goals %}
+
+                <div class="goal-item">
+                    <span>✓</span>
+                    {{ goal }}
+                </div>
+
+            {% else %}
+
+                <p>No goals added yet.</p>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- TODAY'S FOCUS -->
+
+    <section class="focus-section">
+
+        <div class="focus-content">
+
+            <span class="welcome-label">A LITTLE STEP TODAY</span>
+
+            <h2>Consistency begins with one decision.</h2>
+
+            <p>
+                You don't have to change everything today.
+                Start with something manageable, listen to your body
+                and keep building.
+            </p>
+
+            <a href="{{ url_for('chat', client_id=client.id) }}"
+               class="primary-button">
+                Talk to Your AI Coach →
+            </a>
+
+        </div>
+
+        <div class="focus-icon">
+            🌱
+        </div>
+
+    </section>
+
+
+    <!-- DISCOVER -->
+
+    <section class="discover-section" id="discover">
+
+        <div class="section-title">
+            <div>
+                <span class="welcome-label">EXPLORE MYMFIT</span>
+                <h2>Your journey, all in one place.</h2>
+            </div>
+        </div>
+
+
+        <div class="discover-grid">
+
+            <div class="discover-card">
+
+                <div class="discover-icon">🏋️</div>
+
+                <h3>Move</h3>
+
+                <p>
+                    Build strength, improve stamina and discover
+                    workouts that fit your lifestyle.
+                </p>
+
+                <a href="{{ url_for('chat', client_id=client.id) }}">
+                    Explore workouts →
+                </a>
+
+            </div>
+
+
+            <div class="discover-card">
+
+                <div class="discover-icon">🥑</div>
+
+                <h3>Nourish</h3>
+
+                <p>
+                    Discover practical nutrition guidance and
+                    everyday meals that support your goals.
+                </p>
+
+                <a href="{{ url_for('chat', client_id=client.id) }}">
+                    Explore nutrition →
+                </a>
+
+            </div>
+
+
+            <div class="discover-card">
+
+                <div class="discover-icon">🤖</div>
+
+                <h3>AI Coach</h3>
+
+                <p>
+                    Ask questions, get personalized guidance
+                    and find support along your journey.
+                </p>
+
+                <a href="{{ url_for('chat', client_id=client.id) }}">
+                    Meet your coach →
+                </a>
+
+            </div>
+
+
+            <div class="discover-card">
+
+                <div class="discover-icon">📈</div>
+
+                <h3>Grow</h3>
+
+                <p>
+                    Celebrate your milestones and build
+                    healthy habits one day at a time.
+                </p>
+
+                <a href="{{ url_for('chat', client_id=client.id) }}">
+                    Build your habits →
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer class="dashboard-footer">
+
+        <a href="/" class="logo">MYMFIT<span>.</span>AI</a>
+
+        <p>Your Body. Your Goals. Your Journey.</p>
+
+    </footer>
+
+</main>
+
+</body>
+</html>
